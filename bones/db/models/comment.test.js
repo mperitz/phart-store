@@ -65,7 +65,6 @@ describe('Comment Model', () => {
         let changeUpdateTime = 'Wed Mar 01 2017 12:32:47 GMT-0500 (EST) clearly I changed this'
         updatedComment.setDataValue('updated_at', changeUpdateTime)
         let result = updatedComment.isUpdated()
-        let updated = updatedComment.getDataValue('updated_at').toString()
         expect(result).to.be.equal(changeUpdateTime)
       })
 
