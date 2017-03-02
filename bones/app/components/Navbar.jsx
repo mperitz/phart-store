@@ -24,6 +24,7 @@ export default function (props) {
 
                                 </svg>
                             </button>
+                            </input>
                         </div>
                     </div>
                     <div class="cart largenav col-sm-2">
@@ -39,10 +40,10 @@ export default function (props) {
         <div id="mySidenav" class="sidenav">
             <div class="container" style="padding-top: 10px;">
                 <span class="sidenav-heading">Home</span>
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                {/*<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>*/}
             </div>
         </div>
     </div>
   	)
 
-};
+}
