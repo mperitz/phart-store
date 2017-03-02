@@ -37,10 +37,11 @@ export default function (props) {
                 </div>
             </div>
         </div>
-        <div id="mySidenav" className="sidenav">
-            <div className="container" style="padding-top: 10px;">
-                <span className="sidenav-heading">Home</span>
-                {/*<a href="javascript:void(0)" className="closebtn" onClick="closeNav()">×</a>*/}
+
+        <div id="mySidenav" class="sidenav">
+            <div class="container" style="padding-top: 10px;">
+                <span class="sidenav-heading">Home</span>
+                {/*<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>*/}
             </div>
         </div>
     </div>
