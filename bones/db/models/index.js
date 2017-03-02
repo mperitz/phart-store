@@ -25,6 +25,7 @@ Order.belongsToMany(User, {through: 'order-user'})
 
 //puts order id on OrderItem (order can have many orderItems)
 Order.hasMany(OrderItem)
+Item.hasMany(OrderItem)
 
 //puts item id on orderItem (there can be many orderItems for the same item)
 OrderItem.belongsToMany(Item, {through: 'OrderItem-item'})

@@ -68,6 +68,7 @@ function scraper (URL){
 						// band.genre = DOMNodes[1];
 						band.favorite_users = [DOMNodes[3], DOMNodes[4], DOMNodes[5]];
 						band.favorite_pieces = [DOMNodes[3], DOMNodes[4], DOMNodes[5]];
+            band.genre_id = Math.ceil(Math.random() * 10);
 						console.log(band);
 						BANDSARRAY.push(band);
 
@@ -252,6 +253,8 @@ function scrapeArticles(URL){
 						tags.push(med);
 					})
 					item.tags = tags.join(',');
+          item.seller_id = Math.ceil(Math.random() * 44);
+          item.genre_id = Math.ceil(Math.random() * 10);
 					// if(item.profile_image && item.price && item.description){
 						ITEMSARRAY.push(item);
 					// }
@@ -291,53 +294,77 @@ for(var i = 2; i<3; i++){
 
 }
 
-const ORDERSARRAY = [
-      {
-        quantity: 5,
-        price: 5.00,
-        status: 'In Cart',
-        item_id: 1,
-        user_id: 1
-      },
-      {
-        quantity: 1,
-        price: 25.00,
-        status: 'In Cart',
-        item_id: 2,
-        user_id: 1
-      },
-      {
-        quantity: 1,
-        price: 30.00,
-        status: 'Processing',
-        item_id: 8,
-        user_id: 5
-      },
-      {
-        quantity: 3,
-        price: 30.00,
-        status: 'Complete',
-        item_id: 10,
-        user_id: 5
-      },
-      {
-        quantity: 10,
-        price: 25.00,
-        status: 'Dispatched',
-        item_id: 12,
-        user_id: 44
-      }
-    ]
+// const ORDERSARRAY = [
+//       {
+//         quantity: 5,
+//         price: 5.00,
+//         status: 'In Cart',
+//         item_id: 1,
+//         user_id: 1
+//       },
+//       {
+//         quantity: 1,
+//         price: 25.00,
+//         status: 'In Cart',
+//         item_id: 2,
+//         user_id: 1
+//       },
+//       {
+//         quantity: 1,
+//         price: 30.00,
+//         status: 'Processing',
+//         item_id: 8,
+//         user_id: 5
+//       },
+//       {
+//         quantity: 3,
+//         price: 30.00,
+//         status: 'Complete',
+//         item_id: 10,
+//         user_id: 5
+//       },
+//       {
+//         quantity: 10,
+//         price: 25.00,
+//         status: 'Dispatched',
+//         item_id: 12,
+//         user_id: 44
+//       }
+//     ]
+
+const GENRESARRAY = [
+  {name: 'Rock'},
+  {name: 'Pop'},
+  {name: 'Jazz'},
+  {name: 'Classical'},
+  {name: 'Ska'},
+  {name: 'Psychadelic'},
+  {name: 'Electronic'},
+  {name: 'Muzak'},
+  {name: 'Blues'},
+  {name: 'Country'}
+]
+
+const ORDERSARRAY = [{status: 'In Cart'}]
+const ORDERITEMSARRAY = [
+  {quantity: 1, price: 1300, item_id: 1, order_id: 1},
+  {quantity: 1, price: 3700, item_id: 2, order_id: 1},
+  {quantity: 1, price: 700, item_id: 3, order_id: 1}
+]
 
 const seedUsers = () => db.Promise.map(USERSARRAY, user => db.model('users').create(user))
 const seedBands = () => db.Promise.map(BANDSARRAY, band => db.model('bands').create(band))
 const seedItems = () => db.Promise.map(ITEMSARRAY, item => db.model('items').create(item))
+const seedGenres = () => db.Promise.map(GENRESARRAY, genre => db.model('genres').create(genre))
 const seedOrders = () => db.Promise.map(ORDERSARRAY, order => db.model('orders').create(order))
+const seedOrderItems = () => db.Promise.map(ORDERITEMSARRAY, orderItem => db.model('orderItems').create(orderItem))
 
 setTimeout(function(){
 	console.log(BANDSARRAY);
 	db.didSync
 	  .then(() => db.sync({force: true}))
+    .then(seedGenres)
+    .then(genres => console.log(`Seeded ${genres.length} bands OK`))
 	  .then(seedUsers)
 	  .then(users => console.log(`Seeded ${users.length} users OK`))
 	  .then(seedBands)
@@ -346,6 +373,8 @@ setTimeout(function(){
 	  .then(items => console.log(`Seeded ${items.length} items OK`))
     .then(seedOrders)
     .then(orders => console.log(`Seeded ${orders.length} orders OK`))
+    .then(seedOrderItems)
+    .then(orderItems => console.log(`Seeded ${orderItems.length} orders OK`))
     .catch(error => console.error(error))
 	  .finally(() => db.close())
 	  console.log(BANDSARRAY);
