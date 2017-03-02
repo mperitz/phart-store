@@ -4,7 +4,7 @@
 const Sequelize = require('sequelize')
 const db = require('APP/db')
 
-const Band = db.define('band', {
+const Band = db.define('bands', {
     name: {
         type: Sequelize.STRING,
         allowNull: false
