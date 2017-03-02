@@ -16,8 +16,10 @@ const Item = db.define('items', {
       min: 0
     }
   },
+
+  //saved in cents
   price: {
-    type: Sequelize.DECIMAL(10, 2),
+    type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
       min: 0
