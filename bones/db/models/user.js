@@ -13,7 +13,7 @@ const User = db.define('users',
     type: Sequelize.STRING,
     validate: {
 			isEmail: true,
-			notEmpty: true,
+			notEmpty: true
 		},
     allowNull: false
   },
@@ -21,6 +21,7 @@ const User = db.define('users',
   //Added properties (begin)
 
   username: {
+
     type: Sequelize.STRING(25),
     allowNull: false
   },
