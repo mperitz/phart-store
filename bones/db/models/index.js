@@ -31,9 +31,6 @@ const Order = db.define('orders', {
     type: Sequelize.ENUM('In Cart', 'Processing', 'Dispatched', 'Complete', 'Closed'),
     allowNull: false,
     defaultValue: 'In Cart'
-    /*
-    All statuses: In Cart, Processing, Dispatched, Complete, Closed
-    */
   }
 })
 Item.belongsToMany(User, {as: 'buyer', through: Order})
