@@ -59,8 +59,8 @@ function scraper (URL){
 							)
 							// console.log(DOMNodes)
 					}
-					
-					
+
+
 						var band = {};
 						band.name = DOMNodes[0].replace('/r','').trim()
 						band.profile_image = DOMNodes[6];
@@ -74,11 +74,11 @@ function scraper (URL){
 						// BandModel.create(band);
 						count++;
 
-						
+
 			})
 }
 
-function crawl(URL){ 
+function crawl(URL){
 	request(URL, function(err, response, body){
 
 			if(!err && response.statusCode === 200){
@@ -91,12 +91,12 @@ function crawl(URL){
 									// console.log(this, '@@@')
 									Queue.push(this)
 									})
-				
+
 			}
-			
-			
+
+
 			for(var i = 0; i<Queue.length; i++){
-				
+
 				if(Queue[i].children[3].children[1].attribs.href != undefined && URLQueue.indexOf(Queue[i].children[3].children[1].attribs.href) === -1){
 					URLQueue.push(Queue[i].children[3].children[1].attribs.href)
 				}
@@ -108,7 +108,7 @@ function crawl(URL){
 				console.log(url);
 				if(count < 1000){
 					scraper(url);
-					
+
 				}else{
 					j = URLQueue.length
 				}
@@ -137,7 +137,7 @@ function scrapePresidents (URL, imageURL, emailBeginning){
 				$('#main_content_id', '#main_content').each(function(){
 					// user.name =;
 					// user.email;
-					
+
 					// user.about;
 
 					array.push(this)
@@ -157,24 +157,24 @@ function scrapePresidents (URL, imageURL, emailBeginning){
 				}
 				user.about_me = description.join('\n');
 				user.email = emailBeginning + Math.random()*10 + '@whitehouse.gov';
-				user.username = emailBeginning; 
+				user.username = emailBeginning;
 				// user.password = '1234'
 
 				// console.log(description.join('\n'))
 				// console.log(user)
 				USERSARRAY.push(user);
-				
+
 			}
 			// console.log(array[1].parent.children[3].children[0].data);
 			// console.log(array[1].next.next)
 
-		})		
+		})
 }
 
 request('http://www.ipl.org/div/potus/', function( error, response, body){
 	if(!error && response.statusCode === 200){
 		var p = [];
-		
+
 							var $ = cheerio.load(body);
 							$('ol.potus','.potusTableIndex').each(function(){
 								p.push(this)
@@ -210,7 +210,7 @@ var number = 0;
 
 function scrapeArticles(URL){
 	request(URL, function(err, response, body){
-			
+
 			console.error(err);
 			// if(!err && response.statusCode = 200){
 				number ++;
@@ -244,7 +244,7 @@ function scrapeArticles(URL){
 						item.name = this.children[3].attribs['data-subject'];
 						var medium = item.name.split(',')
 						var med = medium.slice(1,medium.length-2).join(', ')
-						
+
 						if(med.length === 0){
 							med = 'canvas'
 						}
@@ -254,14 +254,14 @@ function scrapeArticles(URL){
 					item.tags = tags.join(',');
 					// if(item.profile_image && item.price && item.description){
 						ITEMSARRAY.push(item);
-					// }	
+					// }
 
 					if(number%2 == 1){
 						tags = []
 					}
-					
-					
-		
+
+
+
 
 	})
 }
@@ -269,7 +269,7 @@ function scrapeArticles(URL){
 var array = []
 for(var i = 2; i<3; i++){
 	request(`https://www.etsy.com/market/music_fan_art/${i}`, function(err, response, body){
-			
+
 			console.error(err);
 			// if(!err && response.statusCode = 200){
 
@@ -286,26 +286,67 @@ for(var i = 2; i<3; i++){
 			for(var i =0; i<array.length; i++){
 				scrapeArticles(array[i])
 			}
-		
+
 	})
-	
+
 }
+
+const ORDERSARRAY = [
+      {
+        quantity: 5,
+        price: 5.00,
+        status: 'In Cart',
+        item_id: 1,
+        user_id: 1
+      },
+      {
+        quantity: 1,
+        price: 25.00,
+        status: 'In Cart',
+        item_id: 2,
+        user_id: 1
+      },
+      {
+        quantity: 1,
+        price: 30.00,
+        status: 'Processing',
+        item_id: 8,
+        user_id: 5
+      },
+      {
+        quantity: 3,
+        price: 30.00,
+        status: 'Complete',
+        item_id: 10,
+        user_id: 5
+      },
+      {
+        quantity: 10,
+        price: 25.00,
+        status: 'Dispatched',
+        item_id: 12,
+        user_id: 44
+      }
+    ]
 
 const seedUsers = () => db.Promise.map(USERSARRAY, user => db.model('users').create(user))
 const seedBands = () => db.Promise.map(BANDSARRAY, band => db.model('bands').create(band))
 const seedItems = () => db.Promise.map(ITEMSARRAY, item => db.model('items').create(item))
+const seedOrders = () => db.Promise.map(ORDERSARRAY, order => db.model('orders').create(order))
+
 setTimeout(function(){
 	console.log(BANDSARRAY);
 	db.didSync
 	  .then(() => db.sync({force: true}))
 	  .then(seedUsers)
 	  .then(users => console.log(`Seeded ${users.length} users OK`))
-	  .catch(error => console.error(error))
 	  .then(seedBands)
 	  .then(bands => console.log(`Seeded ${bands.length} bands OK`))
 	  .then(seedItems)
 	  .then(items => console.log(`Seeded ${items.length} items OK`))
+    .then(seedOrders)
+    .then(orders => console.log(`Seeded ${orders.length} orders OK`))
+    .catch(error => console.error(error))
 	  .finally(() => db.close())
 	  console.log(BANDSARRAY);
-
 }, 30000)
