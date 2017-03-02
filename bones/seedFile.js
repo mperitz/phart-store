@@ -1,15 +1,11 @@
-'use strict'; // eslint-disable-line semi
-
 var request = require('request'),
 	cheerio = require('cheerio');
-// var BandModel = require('./models/band');
-// var UserModel = require('./models/user')
+var BandModel = require('./db/models/band');
+var UserModel = require('./db/models/user')
+// var db = require('./Models/db')
+// var Crawler = require('node-webcrawler');
+// var url = require('url');
 
-const db = require('APP/db')
-
-var USERSARRAY = [];
-var BANDSARRAY = [];
-var ITEMSARRAY = [];
 var count = 0;
 var max = 100;
 var Queue = [];
@@ -68,14 +64,14 @@ function scraper (URL){
 						band.genre = DOMNodes[1];
 						band.favorite_users = [DOMNodes[3], DOMNodes[4], DOMNodes[5]];
 						band.favorite_pieces = [DOMNodes[3], DOMNodes[4], DOMNodes[5]];
-						console.log(band);
-						BANDSARRAY.push(band);
 
-						// BandModel.create(band);
+						BandModel.create(band);
 						count++;
 
 						
 			})
+
+
 }
 
 function crawl(URL){ 
@@ -106,7 +102,7 @@ function crawl(URL){
 			for(var j = 0; j<URLQueue.length; j++){
 				var url = 'http://store.hmv.com/music/'+URLQueue[j];
 				console.log(url);
-				if(count < 1000){
+				if(count < max){
 					scraper(url);
 					
 				}else{
@@ -115,6 +111,7 @@ function crawl(URL){
 			}
 		URLQueue = []
 	});
+
 }
 
 for(var i = 0; i<1; i++){
@@ -161,14 +158,15 @@ function scrapePresidents (URL, imageURL, emailBeginning){
 				// user.password = '1234'
 
 				// console.log(description.join('\n'))
-				// console.log(user)
-				USERSARRAY.push(user);
-				
+				console.log(user)
+				UserModel.create(user)
+				.catch(console.error)
 			}
 			// console.log(array[1].parent.children[3].children[0].data);
 			// console.log(array[1].next.next)
 
-		})		
+		})
+		
 }
 
 request('http://www.ipl.org/div/potus/', function( error, response, body){
@@ -204,108 +202,3 @@ request('http://www.ipl.org/div/potus/', function( error, response, body){
 	scrapePresidents(URL, photoEndings[i], emailBeginnings[i]);
 	}
 })
-
-var tags = [];
-var number = 0;
-
-function scrapeArticles(URL){
-	request(URL, function(err, response, body){
-			
-			console.error(err);
-			// if(!err && response.statusCode = 200){
-				number ++;
-				number ++;
-				number ++;
-				var item = {}
-					var $ = cheerio.load(body);
-					$('#image-carousel', '#image-main').each(function(){
-						if(this){
-							// console.log(this.children[3].attribs)
-							item.profile_image = this.children[1].attribs['data-full-image-href']
-							// console.log(this.children[0])
-						}
-						// console.log('fingers crossed')
-					})
-					$('#description-text', '#description').each(function(){
-						item.description = this.children[0].data.replace('\r','').trim() + '           \n';
-					})
-
-					item.num_available = Math.floor(Math.random()*100);
-
-					$('.buy-box__price.ui-toolkit').each(function(){
-						var string = this.children[1].children[0].data.replace('\r','').trim()
-						var price = parseInt(string.slice(1, string.length-1));
-						item.price = price;
-					})
-					item.num_upvotes = Math.floor(Math.random()*500);
-
-					$('#listing-page-cart-inner', '#listing-page-cart').each(function(){
-						console.log(this.children[3].attribs['data-subject'])
-						item.name = this.children[3].attribs['data-subject'];
-						var medium = item.name.split(',')
-						var med = medium.slice(1,medium.length-2).join(', ')
-						
-						if(med.length === 0){
-							med = 'canvas'
-						}
-						item.medium = med;
-						tags.push(med);
-					})
-					item.tags = tags.join(',');
-					// if(item.profile_image && item.price && item.description){
-						ITEMSARRAY.push(item);
-					// }	
-
-					if(number%2 == 1){
-						tags = []
-					}
-					
-					
-		
-
-	})
-}
-
-var array = []
-for(var i = 2; i<3; i++){
-	request(`https://www.etsy.com/market/music_fan_art/${i}`, function(err, response, body){
-			
-			console.error(err);
-			// if(!err && response.statusCode = 200){
-
-					var $ = cheerio.load(body);
-					$('.buyer-card', '.block-grid-item').each(function(){
-						if(this.attribs.href){
-							array.push(this.attribs.href)
-						}
-						// console.log('fingers crossed')
-					})
-				// 	console.log(array.length)
-				// console.log('here')
-			// }
-			for(var i =0; i<array.length; i++){
-				scrapeArticles(array[i])
-			}
-		
-	})
-	
-}
-
-const seedUsers = () => db.Promise.map(USERSARRAY, user => db.model('users').create(user))
-const seedBands = () => db.Promise.map(BANDSARRAY, band => db.model('bands').create(band))
-const seedItems = () => db.Promise.map(ITEMSARRAY, item => db.model('items').create(item))
-setTimeout(function(){
-	console.log(BANDSARRAY);
-	db.didSync
-	  .then(() => db.sync({force: true}))
-	  .then(seedUsers)
-	  .then(users => console.log(`Seeded ${users.length} users OK`))
-	  .catch(error => console.error(error))
-	  .then(seedBands)
-	  .then(bands => console.log(`Seeded ${bands.length} bands OK`))
-	  .then(seedItems)
-	  .then(items => console.log(`Seeded ${items.length} items OK`))
-	  .finally(() => db.close())
-	  console.log(BANDSARRAY);
-
-}, 30000)
