@@ -65,7 +65,7 @@ function scraper (URL){
 						band.name = DOMNodes[0].replace('/r','').trim()
 						band.profile_image = DOMNodes[6];
 						band.description = DOMNodes[2].replace('/r','').trim();
-						band.genre = DOMNodes[1];
+						// band.genre = DOMNodes[1];
 						band.favorite_users = [DOMNodes[3], DOMNodes[4], DOMNodes[5]];
 						band.favorite_pieces = [DOMNodes[3], DOMNodes[4], DOMNodes[5]];
 						console.log(band);
@@ -235,7 +235,7 @@ function scrapeArticles(URL){
 					$('.buy-box__price.ui-toolkit').each(function(){
 						var string = this.children[1].children[0].data.replace('\r','').trim()
 						var price = parseInt(string.slice(1, string.length-1));
-						item.price = price;
+						item.price = price * 100;
 					})
 					item.num_upvotes = Math.floor(Math.random()*500);
 

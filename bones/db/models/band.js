@@ -19,9 +19,6 @@ const Band = db.define('bands', {
     description: {
         type: Sequelize.TEXT
     },
-    genre: {
-        type: Sequelize.STRING
-    },
     favorite_users: {
         type: Sequelize.ARRAY(Sequelize.STRING),
         defaultValue: [],

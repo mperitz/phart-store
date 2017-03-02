@@ -9,34 +9,30 @@ const db = require('APP/db')
 const User = require('./user')
 const OAuth = require('./oauth')
 const Item = require('./item')
-// const Comment = require('./comment')
+const Comment = require('./comment')
+const Order = require('./order')
+const OrderItem = require('./orderItem')
 const Band = require('./band')
+const Genre = require('./genre')
 
 OAuth.belongsTo(User)
 User.hasOne(OAuth)
 
 Item.belongsTo(User, {as: 'seller'})
 
-// to set up join table
-const Order = db.define('orders', {
-  quantity: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  price: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  status: {
-    type: Sequelize.ENUM('In Cart', 'Processing', 'Dispatched', 'Complete', 'Closed'),
-    allowNull: false,
-    defaultValue: 'In Cart'
-    /*
-    All statuses: In Cart, Processing, Dispatched, Complete, Closed
-    */
-  }
-})
-Item.belongsToMany(User, {as: 'buyer', through: Order})
-User.belongsToMany(Item, {as: 'product', through: Order})
 
-module.exports = {User, Item, /*Comment, */Band}
+//puts a user id on the order (can have multiple orders)
+Order.belongsToMany(User, {through: 'order-user'})
+
+//puts order id on OrderItem (order can have many orderItems)
+Order.hasMany(OrderItem)
+
+//puts item id on orderItem (there can be many orderItems for the same item)
+OrderItem.belongsToMany(Item, {through: 'OrderItem-item'})
+
+//genre id on band and item
+Item.belongsTo(Genre)
+Band.belongsTo(Genre)
+
+
+module.exports = {User, Item, Comment, Band, Order, OrderItem, Genre}
