@@ -3,13 +3,14 @@ import React from 'react';
 
 export default function Item (props) {
 
-  const album = props.selectedAlbum;
+  const selected = props.selected
+  
 
   return (
     <div className="album">
       <div>
-        <h3>{ album.name }</h3>
-        <img src={ album.imageUrl } className="img-thumbnail"/>
+        <h3>{ selected.name }</h3>
+        <img src={ selected.profile_image } className="img-thumbnail"/>
       </div>
       {/*<SongsContainer songs={album.songs} />*/}
     </div>

@@ -1,4 +1,4 @@
-import {RECEIVE_ITEMS, RECEIVE_ITEM} from '../constants'
+import {RECEIVE_ITEMS, RECEIVE_ITEM, RECEIVE_GENRES} from '../constants'
 
 const initialState = {
   list: [],

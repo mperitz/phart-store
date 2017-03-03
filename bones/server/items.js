@@ -13,5 +13,11 @@ router.get('/', function(req, res, next) {
   .catch(next)
 })
 
+router.get('/:Itemid', function(req, res, next){
+	Item.findById(req.params.Itemid)
+	.then(item => res.json(item))
+	.catch(next)
+})
+
 
 module.exports = router
