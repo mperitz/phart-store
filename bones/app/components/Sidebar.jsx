@@ -8,24 +8,30 @@ export default class Sidebar extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-
     }
+    this.onCLickHandler = this.onCLickHandler.bind(this)
   }
+
   onCLickHandler(event){
-    props.updateStore(event.target.key)
+    const genreId = event // this is genre id
+    this.props.addGenre(genreId)
   }
   // const playlists = props.playlists;
   render(){
+
+      let genresArr = this.props.genres
+
       return (
         <sidebar>
           <img src="juke.svg" className="logo"/>
           <section>
-          {
-            // <h4 className="menu-item btn btn-primary btn-block" onClick ={}>
-
-            // </h4>
+          {genresArr && genresArr.map(genre => (
+            <h4 className="menu-item btn btn-primary btn-block" key={genre.id} value={genre.id} onClick={() => this.onCLickHandler(genre.id)}>
+            {genre.name}
+            </h4>
+          ))
           }
-            
+
           </section>
           <section>
             <h4 className="menu-item">

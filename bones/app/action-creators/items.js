@@ -1,5 +1,5 @@
-import {RECEIVE_ITEMS, RECEIVE_ITEM, RECEIVE_GENRES} from '../constants'
-import axios from 'axios';
+import {RECEIVE_ITEMS, RECEIVE_ITEM} from '../constants'
+import axios from 'axios'
 
 export const receiveItems = items => ({
     type: RECEIVE_ITEMS,
@@ -9,11 +9,6 @@ export const receiveItems = items => ({
 export const receiveItem = item => ({
     type: RECEIVE_ITEM,
     item
-})
-
-export const receiveAllGenres = genres => ({
-  type: RECEIVE_GENRES,
-  genres
 })
 
 export const items = () => {
@@ -33,5 +28,6 @@ export const item = (Itemid) => {
     })
   }
 }
+
 
 

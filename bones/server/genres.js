@@ -10,4 +10,10 @@ router.get('/', function(req,res,next){
 	.catch(next);
 })
 
+router.get('/:genreId', function(req, res, next){
+  Genre.findById(req.params.genreId)
+  .then(genre => res.json(genre))
+  .catch(next)
+})
+
 module.exports = router
