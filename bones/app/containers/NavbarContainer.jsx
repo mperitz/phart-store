@@ -1,9 +1,15 @@
-import React, {Component} from 'react';
+import { connect } from 'react-redux'
+import Navbar from '../components/Navbar'
+import { logout } from '../reducers/auth.jsx'
 
-import store from '../store';
-import Navbar from '../components/Navbar';
+const mapStateToProps = state => ({
+  auth: state.auth
+})
 
-export default class extends Component {
+const mapDispatchToProps = dispatch => ({
+  logout: () => {
+    dispatch(logout())
+  }
+})
 
-
-}
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

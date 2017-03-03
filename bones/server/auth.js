@@ -126,6 +126,32 @@ auth.get('/whoami', (req, res) => res.send(req.user))
 // POST requests for local login:
 auth.post('/login/local', passport.authenticate('local', { successRedirect: '/' }))
 
+// POST for signup
+auth.post('/signup/local', (req, res, next) => {
+  return User.findOrCreate({
+    where: {
+      email: req.body.email,
+      username: req.body.username
+    },
+    defaults: {
+      name: req.body.name,
+      about_me: req.body.about_me,
+      password: req.body.password
+    }
+  })
+  .then(result => {
+    if (result[1]) {
+      res.send(result[0])
+    }
+  })
+  .catch(err => {
+    if (err.errors[0].message === 'email must be unique') {
+      res.send({emailAvailable: false})
+    }
+    next()
+  })
+})
+
 // GET requests for OAuth login:
 // Register this route as a callback URL with OAuth provider
 auth.get('/login/:strategy', (req, res, next) =>
