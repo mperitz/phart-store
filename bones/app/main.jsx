@@ -7,6 +7,7 @@ import {connect, Provider} from 'react-redux'
 import store from './store'
 import Jokes from './components/Jokes'
 import Login from './components/Login'
+import Signup from './components/Signup'
 import WhoAmI from './components/WhoAmI'
 import App from './containers/AppContainer'
 import ItemsListContainer from './containers/ItemsListContainer'
@@ -42,6 +43,8 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App} onEnter={onAppEnter}>
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
         <Route path ="/items" component={ ItemsListContainer } />
         <IndexRedirect to="/items" />
       </Route>

@@ -159,7 +159,7 @@ function scrapePresidents (URL, imageURL, emailBeginning){
 				user.about_me = description.join('\n');
 				user.email = emailBeginning + Math.random()*10 + '@whitehouse.gov';
 				user.username = emailBeginning;
-				// user.password = '1234'
+				user.password = '1234'
 
 				// console.log(description.join('\n'))
 				// console.log(user)
@@ -352,12 +352,15 @@ const ORDERITEMSARRAY = [
   {quantity: 1, price: 700, item_id: 3, order_id: 1}
 ]
 
+const ORDERUSERARRAY = [{order_id: 1, user_id: 44}]
+
 const seedUsers = () => db.Promise.map(USERSARRAY, user => db.model('users').create(user))
 const seedBands = () => db.Promise.map(BANDSARRAY, band => db.model('bands').create(band))
 const seedItems = () => db.Promise.map(ITEMSARRAY, item => db.model('items').create(item))
 const seedGenres = () => db.Promise.map(GENRESARRAY, genre => db.model('genres').create(genre))
 const seedOrders = () => db.Promise.map(ORDERSARRAY, order => db.model('orders').create(order))
 const seedOrderItems = () => db.Promise.map(ORDERITEMSARRAY, orderItem => db.model('orderItems').create(orderItem))
+const seedOrderUser = () => db.Promise.map(ORDERUSERARRAY, orderUser => db.model('order-user').create(orderUser))
 
 setTimeout(function(){
 	console.log(BANDSARRAY);
@@ -375,6 +378,8 @@ setTimeout(function(){
     .then(orders => console.log(`Seeded ${orders.length} orders OK`))
     .then(seedOrderItems)
     .then(orderItems => console.log(`Seeded ${orderItems.length} orders OK`))
+    .then(seedOrderUser)
+    .then(orderUser => console.log(`Seeded ${orderUser.length} order-users OK`))
     .catch(error => console.error(error))
 	  .finally(() => db.close())
 	  console.log(BANDSARRAY);
