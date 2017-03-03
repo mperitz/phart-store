@@ -8,6 +8,7 @@ import axios from 'axios'
 import store from './store'
 import Jokes from './components/Jokes'
 import Login from './components/Login'
+import Signup from './components/Signup'
 import WhoAmI from './components/WhoAmI'
 
 import App from './containers/AppContainer'
@@ -61,6 +62,8 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App} onEnter={onAppEnter}>
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
         <Route path ="/items" component={ ItemsListContainer } />
         <Route path ="/items/:Itemid" component={ ItemContainer } onEnter={ onItemEnter } />
         <IndexRedirect to="/items" />
