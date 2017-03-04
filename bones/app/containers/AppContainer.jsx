@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import SidebarContainer from '../containers/SidebarContainer'
+import SidebarContainer from '../containers/SidebarContainer.jsx'
 import NavbarContainer from '../containers/NavbarContainer'
 
 export default function ({ children }) {

@@ -1,8 +1,8 @@
-import {RECEIVE_ITEMS, RECEIVE_ITEM} from '../constants'
+import {RECEIVE_GENRES, RECEIVE_GENRE_ID} from '../constants'
 
 const initialState = {
-  list: [],
-  selected: {}
+  listAll: [],
+  selectedList: []
 }
 
 export default function (state = initialState, action) {
@@ -11,12 +11,12 @@ export default function (state = initialState, action) {
 
   switch (action.type) {
 
-    case RECEIVE_ITEMS:
-      newState.list = action.items
+    case RECEIVE_GENRES:
+      newState.listAll = action.genres
       break
 
-    case RECEIVE_ITEM:
-      newState.selected = action.item
+    case RECEIVE_GENRE_ID:
+      newState.selectedList.push(action.genreId)
       break
 
     default:

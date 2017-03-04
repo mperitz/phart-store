@@ -15,7 +15,8 @@ import App from './containers/AppContainer'
 import ItemsListContainer from './containers/ItemsListContainer'
 import ItemContainer from './containers/ItemContainer'
 
-import {item, receiveItems, receiveAllGenres} from './action-creators/items'
+import {item, receiveItems} from './action-creators/items'
+import {receiveAllGenres} from './action-creators/genres'
 
 
 
@@ -42,12 +43,12 @@ const onAppEnter = () => {
   .then(responses => responses.map(response =>
     response.data
     ))
-  .then(([itemsArr, genresArr]) =>{
-    store.dispatch(receiveItems(itemsArr));
+  .then(([itemsArr, genresArr]) => {
+    store.dispatch(receiveItems(itemsArr))
     store.dispatch(receiveAllGenres(genresArr))
   }
     )
-  
+
 }
 
 const onItemEnter = (nextRouterState) =>{
