@@ -23,7 +23,9 @@ export default class Sidebar extends React.Component{
 
       return (
         <sidebar>
-          <img src="juke.svg" className="logo"/>
+          <div>
+            <Link to={'/'}><h2>phART.com</h2></Link>
+          </div>
           <section>
           {genresArr && genresArr.map(genre => (
             <h4 className="menu-item btn btn-primary btn-block" key={genre.id} value={genre.id} onClick={() => this.onCLickHandler(genre.id)}>
@@ -31,7 +33,6 @@ export default class Sidebar extends React.Component{
             </h4>
           ))
           }
-
           </section>
           <section>
             <h4 className="menu-item">

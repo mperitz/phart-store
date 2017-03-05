@@ -8,6 +8,24 @@ body {
 #main {
   padding-left: 0; }
 
+.flipkart-navbar-input {
+  margin-top: 20px;
+  height: 37px;
+}
+
+#input-button {
+  margin-top: 20px;
+}
+
+.nav-right {
+  margin-top: 20px;
+  padding: 0;
+}
+
+#cart {
+  margin-left: 20px;
+}
+
 sidebar {
   position: fixed;
   left: 0;
@@ -40,6 +58,9 @@ sidebar {
         color: white; }
     sidebar .menu-item.active, sidebar .menu-item:hover {
       border-left: 3px solid #00bc8c; }
+.logo {
+  padding-bottom: 50px;
+}
 
 footer {
   position: fixed;
