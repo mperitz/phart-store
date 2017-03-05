@@ -62,6 +62,11 @@ sidebar {
   padding-bottom: 50px;
 }
 
+.cart {
+  height: 300px !important;
+  width: 200px !important;
+}
+
 footer {
   position: fixed;
   background-color: #555;

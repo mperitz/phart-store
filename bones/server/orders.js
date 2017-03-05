@@ -46,4 +46,12 @@ router.get('/cart/:userId', function(req, res, next){
 	.catch(next)
 })
 
+router.post('/cart', function(req, res, next) {
+  Order.findOrCreate({
+    where: {
+      status: 'In Cart'
+    }
+  })
+})
+
 module.exports = router
