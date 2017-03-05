@@ -14,9 +14,11 @@ import WhoAmI from './components/WhoAmI'
 import App from './containers/AppContainer'
 import ItemsListContainer from './containers/ItemsListContainer'
 import ItemContainer from './containers/ItemContainer'
+import ShoppingCartContainer from './containers/ShoppingCartContainer'
 
 import {item, receiveItems} from './action-creators/items'
 import {receiveAllGenres} from './action-creators/genres'
+import { fetchCart } from './action-creators/cart'
 
 
 
@@ -51,8 +53,13 @@ const onAppEnter = () => {
 
 }
 
+// this doesnt work.  see orders route.
+const onCartEnter = (nextRouterState) => {
+  store.dispatch(fetchCart(nextRouterState.params.userId))
+}
+
 const onItemEnter = (nextRouterState) =>{
-  const Itemid = nextRouterState.params.Itemid;
+  const Itemid = nextRouterState.params.Itemid
 
   store.dispatch(item(Itemid))
 }
@@ -66,6 +73,7 @@ render(
         <Route path="/signup" component={Signup} />
         <Route path ="/items" component={ ItemsListContainer } />
         <Route path ="/items/:Itemid" component={ ItemContainer } onEnter={ onItemEnter } />
+        <Route path="/cart/:userId" component={ ShoppingCartContainer } onEnter= { onCartEnter } />
         <IndexRedirect to="/items" />
       </Route>
     </Router>
