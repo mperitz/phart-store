@@ -11,9 +11,9 @@ export const addToCart = item => ({
   item
 })
 
-export const removeFromCart = item => ({
+export const removeFromCart = itemToBeRemoved => ({
   type: REMOVE_ITEM_FROM_CART,
-  item
+  itemToBeRemoved
 })
 
 export const fetchCart = userId => {
@@ -44,5 +44,11 @@ When someone logged in adds an item to their cart:
 export const addCartItemToOrder = item => {
   return dispatch => {
     axios.post('something')
+  }
+}
+
+export const removeItemFromOrder = item => {
+  return dispatch => {
+    axios.delete('something')
   }
 }
