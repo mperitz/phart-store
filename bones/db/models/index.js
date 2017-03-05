@@ -34,5 +34,12 @@ OrderItem.belongsToMany(Item, {through: 'OrderItem-item'})
 Item.belongsTo(Genre)
 Band.belongsTo(Genre)
 
+//places bandId on item
+Item.belongsTo(Band)
+
+// places Item_id on comment
+Comment.belongsTo(Item)
+Comment.belongsTo(User)
+
 
 module.exports = {User, Item, Comment, Band, Order, OrderItem, Genre}

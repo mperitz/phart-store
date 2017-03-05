@@ -1,8 +1,9 @@
-import {RECEIVE_ITEMS, RECEIVE_ITEM} from '../constants'
+import {RECEIVE_ITEMS, RECEIVE_ITEM, RECEIVE_COMMENTS} from '../constants'
 
 const initialState = {
   list: [],
-  selected: {}
+  selected: {},
+  comments: []
 }
 
 export default function (state = initialState, action) {
@@ -17,6 +18,10 @@ export default function (state = initialState, action) {
 
     case RECEIVE_ITEM:
       newState.selected = action.item
+      break
+
+     case RECEIVE_COMMENTS:
+      newState.comments = action.comments
       break
 
     default:
