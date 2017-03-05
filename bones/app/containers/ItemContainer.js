@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => {
   return {
-    selected: state.items.selected
+    selected: state.items.selected,
+    comments: state.items.comments
   }
 }
 
