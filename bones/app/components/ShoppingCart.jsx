@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 export default class extends React.Component {
   constructor(props) {
@@ -26,7 +27,14 @@ export default class extends React.Component {
                   <h5>{item.name}</h5>
                   <h6>${(item.price / 100).toFixed(2)}</h6>
                   <h6>Quantity: {item.quantity}</h6>
-                  <button className="btn btn-danger" onClick={() => this.props.removeItemFromCart(item)}>Remove from Cart</button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => {
+                        this.props.removeItemFromCart(item, this.props.user.id)
+                      }
+                    }>
+                    Remove from Cart
+                  </button>
                 </div>
               </li>
             )

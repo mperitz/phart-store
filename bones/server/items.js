@@ -6,7 +6,9 @@ const Comment = db.model('comment')
 const router = require('express').Router();
 
 router.get('/', function(req, res, next) {
-//working
+  // this places an empty 'cart' object on the session
+  // or if it finds an existing cart it keeps it
+  // We need to tie adding and removing items in guest mode
   req.sessionCookies.cart = req.sessionCookies.cart || []
   Item.findAll()
   .then(allItems => {
@@ -14,9 +16,6 @@ router.get('/', function(req, res, next) {
   })
   .catch(next)
 })
-// this places an empty 'cart' object on the session
-// or if it finds an existing cart it keeps it
-// We need to tie adding and removing items in guest mode
 
 router.get('/:Itemid', function(req, res, next){
 	Item.findById(req.params.Itemid)

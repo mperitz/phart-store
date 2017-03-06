@@ -1,6 +1,6 @@
 import Item from '../components/Item'
 import { connect } from 'react-redux'
-import { addToCart } from '../action-creators/cart'
+import { addToCartAndDb } from '../action-creators/cart'
 import { createComment } from '../action-creators/items'
 
 const mapStateToProps = (state) => {
@@ -14,8 +14,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addItemToCart: item => {
-      dispatch(addToCart(item))
+    addItemToCart: (item, userId) => {
+      dispatch(addToCartAndDb(item, userId))
     },
 
     addComment: input => {
