@@ -1,4 +1,4 @@
-import {RECEIVE_ITEMS, RECEIVE_ITEM} from '../constants'
+import {RECEIVE_ITEMS, RECEIVE_ITEM, RECEIVE_COMMENTS} from '../constants'
 import axios from 'axios'
 
 export const receiveItems = items => ({
@@ -9,6 +9,11 @@ export const receiveItems = items => ({
 export const receiveItem = item => ({
     type: RECEIVE_ITEM,
     item
+})
+
+export const receiveComments = comments => ({
+  type: RECEIVE_COMMENTS,
+  comments
 })
 
 export const items = () => {
@@ -25,6 +30,15 @@ export const item = (Itemid) => {
     axios.get(`/api/items/${Itemid}`)
     .then(response => {
       dispatch(receiveItem(response.data))
+    })
+  }
+}
+
+export const fetchComments = (itemId) => {
+  return dispatch => {
+    axios.get(`/api/items/${itemId}/comments`)
+    .then(response => {
+      dispatch(receiveComments(response.data))
     })
   }
 }

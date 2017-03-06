@@ -255,6 +255,7 @@ function scrapeArticles(URL){
 					item.tags = tags.join(',');
           item.seller_id = Math.ceil(Math.random() * 44);
           item.genre_id = Math.ceil(Math.random() * 10);
+          item.band_id = Math.ceil(Math.random() * 20);
 					// if(item.profile_image && item.price && item.description){
 						ITEMSARRAY.push(item);
 					// }
@@ -352,6 +353,17 @@ const ORDERITEMSARRAY = [
   {quantity: 1, price: 700, item_id: 3, order_id: 1}
 ]
 
+// let quotesStr = 'helloooooooooo';
+var CommentsARRAY = [];
+for(let i = 0; i<44; i++){
+	CommentsARRAY.push({
+		content: 'quotesString',
+		// num_stars: Math.random()*5,
+		user_id: Math.floor(Math.random()*44),
+		item_id: Math.floor(Math.random()*80)
+	})
+}
+
 const ORDERUSERARRAY = [{order_id: 1, user_id: 44}]
 
 const seedUsers = () => db.Promise.map(USERSARRAY, user => db.model('users').create(user))
@@ -361,9 +373,13 @@ const seedGenres = () => db.Promise.map(GENRESARRAY, genre => db.model('genres')
 const seedOrders = () => db.Promise.map(ORDERSARRAY, order => db.model('orders').create(order))
 const seedOrderItems = () => db.Promise.map(ORDERITEMSARRAY, orderItem => db.model('orderItems').create(orderItem))
 const seedOrderUser = () => db.Promise.map(ORDERUSERARRAY, orderUser => db.model('order-user').create(orderUser))
+const seedComments = () => db.Promise.map(CommentsARRAY, comment => db.model('comment').create(comment))
+
+	console.log('an enormous string');
+	console.log(CommentsARRAY);
 
 setTimeout(function(){
-	console.log(BANDSARRAY);
+
 	db.didSync
 	  .then(() => db.sync({force: true}))
     .then(seedGenres)
@@ -379,8 +395,14 @@ setTimeout(function(){
     .then(seedOrderItems)
     .then(orderItems => console.log(`Seeded ${orderItems.length} orders OK`))
     .then(seedOrderUser)
-    .then(orderUser => console.log(`Seeded ${orderUser.length} order-users OK`))
+		.then(orderItems => console.log(`Seeded ${orderItems.length} orders OK`))
+    .then(seedComments)
+    .then(comments => console.log(`Seeded ${comments.length} order-users OK`))
     .catch(error => console.error(error))
 	  .finally(() => db.close())
 	  console.log(BANDSARRAY);
 }, 30000)
+
+
+
+

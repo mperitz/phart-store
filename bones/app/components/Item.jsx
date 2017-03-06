@@ -1,10 +1,10 @@
 import React from 'react';
-// import SongsContainer from '../containers/SongsContainer';
+import Comments from './Comments'
 
 export default function Item (props) {
 
   const selected = props.selected
-
+  const comments = props.comments
 
   return (
     <div className="album">
@@ -14,11 +14,9 @@ export default function Item (props) {
         <p>{ selected.description }</p>
         <h4>Price:  ${ (selected.price / 100).toFixed(2) }</h4>
         <h5>Quantity Available:  { selected.num_available }</h5>
-        <button className="btn btn-primary" onClick={() => {
-          console.log(selected)
-          props.addItemToCart(selected)}} >
-          Add to Cart</button>
+        <button className="btn btn-primary" onClick={() => {props.addItemToCart(selected)}} >Add to Cart</button>
       </div>
+        <Comments allComments={comments} />
     </div>
   );
 }

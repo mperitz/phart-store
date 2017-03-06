@@ -16,9 +16,10 @@ import ItemsListContainer from './containers/ItemsListContainer'
 import ItemContainer from './containers/ItemContainer'
 import ShoppingCartContainer from './containers/ShoppingCartContainer'
 
-import {item, receiveItems} from './action-creators/items'
+import {item, receiveItems, fetchComments} from './action-creators/items'
 import {receiveAllGenres} from './action-creators/genres'
 import { fetchCart } from './action-creators/cart'
+import {receiveAllBands} from './action-creators/bands'
 
 
 
@@ -40,14 +41,16 @@ const onAppEnter = () => {
   //axios needs to be here beacuse its async and fixes the lag
   const allItems = axios.get('/api/items')
   const allGenres = axios.get('/api/genres')
+  const allBands = axios.get('/api/bands')
 
-  Promise.all([allItems, allGenres])
+  Promise.all([allItems, allGenres, allBands])
   .then(responses => responses.map(response =>
     response.data
     ))
-  .then(([itemsArr, genresArr]) => {
+  .then(([itemsArr, genresArr, bandsArr]) => {
     store.dispatch(receiveItems(itemsArr))
     store.dispatch(receiveAllGenres(genresArr))
+    store.dispatch(receiveAllBands(bandsArr))
   }
     )
 
@@ -58,10 +61,10 @@ const onCartEnter = (nextRouterState) => {
   store.dispatch(fetchCart(nextRouterState.params.userId))
 }
 
-const onItemEnter = (nextRouterState) =>{
+const onItemEnter = (nextRouterState) => {
   const Itemid = nextRouterState.params.Itemid
-
   store.dispatch(item(Itemid))
+  store.dispatch(fetchComments(Itemid))
 }
 
 
