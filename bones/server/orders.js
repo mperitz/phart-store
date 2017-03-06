@@ -75,7 +75,7 @@ router.post('/cart/:userId', function(req, res, next) {
 })
 
 router.put('/cart/:userId', function(req, res, next) {
-  return Order.findOrCreate({
+  Order.findOrCreate({
     where: { status: 'In Cart' },
     include: [
       {
@@ -88,9 +88,12 @@ router.put('/cart/:userId', function(req, res, next) {
     return OrderItem.destroy({
       where: {
         order_id: order[0].id,
-        item_id: req.body.item.id
+        item_id: req.body.item.item_id
       }
     })
+  })
+  .then(result => {
+    res.json(result)
   })
   .catch(next)
 })
