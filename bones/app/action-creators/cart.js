@@ -1,9 +1,9 @@
-import { RECEIVE_CART, ADD_ITEM_TO_CART, REMOVE_ITEM_FROM_CART} from '../constants'
+import { RECEIVE_CART, ADD_ITEM_TO_CART, REMOVE_ITEM_FROM_CART } from '../constants'
 import axios from 'axios'
 
-export const receiveCart = items => ({
+export const receiveCart = list => ({
   type: RECEIVE_CART,
-  items
+  list
 })
 
 export const addToCart = item => ({
@@ -18,15 +18,27 @@ export const removeFromCart = itemToBeRemoved => ({
 
 export const fetchCart = userId => {
   return dispatch => {
-    axios.get(`/api/orders/${userId}`)
+    axios.get(`/api/orders/cart/${userId}`)
     .then(result => {
-      console.log(result)
       return result.data.filter(order => {
         return order.status === 'In Cart'
       })
     })
     .then(cart => {
-      dispatch(receiveCart(cart))
+      const modifiedCart = cart[0].orderItems.map(item => {
+        return ({
+          id: item.id,
+          item_id: item.item_id,
+          name: item.items[0].name,
+          profile_image: item.items[0].profile_image,
+          order_id: item.order_id,
+          price: item.price,
+          quantity: item.quantity,
+          created_at: item.created_at,
+          updated_at: item.updated_at
+        })
+      })
+      dispatch(receiveCart(modifiedCart))
     })
     .catch(err => console.error(err))
   }
