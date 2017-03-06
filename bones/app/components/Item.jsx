@@ -5,6 +5,8 @@ export default function Item (props) {
 
   const selected = props.selected
   const comments = props.comments
+  const userId = props.userId
+  const addComment = props.addComment
 
   return (
     <div className="album">
@@ -16,7 +18,8 @@ export default function Item (props) {
         <h5>Quantity Available:  { selected.num_available }</h5>
         <button className="btn btn-primary" onClick={() => {props.addItemToCart(selected)}} >Add to Cart</button>
       </div>
-        <Comments allComments={comments} />
+        <Comments allComments={comments} userId={userId} itemId={selected.id} submitHandler={addComment} />
+
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import {RECEIVE_ITEMS, RECEIVE_ITEM, RECEIVE_COMMENTS} from '../constants'
+import {RECEIVE_ITEMS, RECEIVE_ITEM, RECEIVE_COMMENTS, ADD_COMMENT} from '../constants'
 
 const initialState = {
   list: [],
@@ -22,6 +22,10 @@ export default function (state = initialState, action) {
 
      case RECEIVE_COMMENTS:
       newState.comments = action.comments
+      break
+
+      case ADD_COMMENT:
+      newState.comments.push(action.comment)
       break
 
     default:
