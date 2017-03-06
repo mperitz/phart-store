@@ -1,12 +1,11 @@
 import React from 'react'
 
-
-export default class Comments extends React.Component {
+export default class Checkout extends React.Component {
 
    constructor(props){
     super(props);
     this.state = {
-      content: ''
+
     }
     this.onSumbitHandler = this.onSumbitHandler.bind(this)
     this.onChangeHandler = this.onChangeHandler.bind(this)
@@ -28,15 +27,7 @@ export default class Comments extends React.Component {
     const allComments = this.props.allComments
 
     return (
-    <div className="comments">
-        {
-          allComments && allComments.map(comment => (
-          <div key={comment.id}>
-            <h3>{ comment.user.name }</h3>
-            <h4>{comment.content}</h4>
-          </div>
-        ))
-      }
+    <div>
       {this.props.userId &&
       <form className="mui-form" onSubmit={this.onSumbitHandler}>
         <legend>Comment</legend>
@@ -45,7 +36,7 @@ export default class Comments extends React.Component {
         </div>
         <button type="submit" className="mui-btn mui-btn--raised">Submit</button>
       </form>
-    }
+      }
     </div>
   )
   }

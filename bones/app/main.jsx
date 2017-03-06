@@ -89,6 +89,7 @@ render(
         <Route path="/signup" component={Signup} />
         <Route path ="/items" component={ ItemsListContainer } />
         <Route path ="/items/:Itemid" component={ ItemContainer } onEnter={ onItemEnter } />
+        <Route path="/cart/:userId" component={ ShoppingCartContainer } onEnter= { onCartEnter } />
         <Route path="/checkout" component={ CheckoutContainer } />
         <Route path="/users/:userId/orderHistory" component={ ProfileContainer} onEnter= {onProfileEnter} />
         <IndexRedirect to="/items" />
