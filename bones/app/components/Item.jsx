@@ -16,7 +16,7 @@ export default function Item (props) {
         <p>{ selected.description }</p>
         <h4>Price:  ${ (selected.price / 100).toFixed(2) }</h4>
         <h5>Quantity Available:  { selected.num_available }</h5>
-        <button className="btn btn-primary" onClick={() => {props.addItemToCart(selected)}} >Add to Cart</button>
+        <button className="btn btn-primary" onClick={() => {props.addItemToCart(selected, userId)}} >Add to Cart</button>
       </div>
         <Comments allComments={comments} userId={userId} itemId={selected.id} submitHandler={addComment} />
 

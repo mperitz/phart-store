@@ -41,21 +41,13 @@ router.get('/cart/:userId', function(req, res, next){
     ]
   })
 	.then(enhancedOrder => {
-    req.session.cart = 'Hello cart'
-    console.log(req.session)
     res.json(enhancedOrder)
   })
 	.catch(next)
 })
 
 router.post('/cart/:userId', function(req, res, next) {
-  req.sessionCookies.cart.push(req.body)
-  /* Want to add an order item when someone adds
-  an item to the cart.  Do we need to find the order
-  and then include the user and order items and then push the item
-  to the order items?
-  */
-  return Order.findOne({
+  return Order.findOrCreate({
     where: { status: 'In Cart' },
     include: [
       {
@@ -64,7 +56,46 @@ router.post('/cart/:userId', function(req, res, next) {
       }
     ]
   })
-  .then(response => res.json(response))
+  .then(order => {
+    return OrderItem.create({
+        quantity: req.body.quantity,
+        price: req.body.item.price,
+        order_id: order[0].id,
+        item_id: req.body.item.id
+
+    })
+  })
+  .then(createdItem => {
+    return OrderItemToItem.create({
+      order_item_id: createdItem.id,
+      item_id: req.body.item.id
+    })
+  })
+  .catch(next)
+})
+
+router.put('/cart/:userId', function(req, res, next) {
+  Order.findOrCreate({
+    where: { status: 'In Cart' },
+    include: [
+      {
+        model: User,
+        where: { id: req.params.userId }
+      }
+    ]
+  })
+  .then(order => {
+    return OrderItem.destroy({
+      where: {
+        order_id: order[0].id,
+        item_id: req.body.item.item_id
+      }
+    })
+  })
+  .then(result => {
+    res.json(result)
+  })
+  .catch(next)
 })
 
 module.exports = router

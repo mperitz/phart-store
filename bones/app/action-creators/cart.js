@@ -25,12 +25,14 @@ export const fetchCart = userId => {
       })
     })
     .then(cart => {
+      console.log('HERE IS THE CART!!!', cart)
       const modifiedCart = cart[0].orderItems.map(item => {
+        console.log(item)
         return ({
           id: item.id,
           item_id: item.item_id,
-          name: item.items[0].name,
-          profile_image: item.items[0].profile_image,
+          name: item.items[0].name || '',
+          profile_image: item.items[0].profile_image || '',
           order_id: item.order_id,
           price: item.price,
           quantity: item.quantity,
@@ -53,14 +55,27 @@ When someone logged in adds an item to their cart:
     c. If not, create a new order, and then do step 2b.
 */
 
-export const addCartItemToOrder = item => {
+export const addToCartAndDb = (item, userId) => {
   return dispatch => {
-    axios.post('something')
+    axios.post(`/api/orders/cart/${userId}`, {
+      item,
+      quantity: 1
+    })
+    .then(() => {
+      dispatch(fetchCart(userId))
+    })
+    .catch(err => console.error(err))
   }
 }
 
-export const removeItemFromOrder = item => {
+export const removeItemFromOrder = (item, userId) => {
   return dispatch => {
-    axios.delete('something')
+    axios.put(`/api/orders/cart/${userId}`, {
+      item
+    })
+    .then((res) => {
+      dispatch(removeFromCart(item))
+    })
+    .catch(err => console.error(err))
   }
 }

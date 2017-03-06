@@ -366,6 +366,8 @@ for(let i = 0; i<44; i++){
 
 const ORDERUSERARRAY = [{order_id: 1, user_id: 44}]
 
+const ORDERITEMTOITEMARRAY = [{order_item_id: 1, item_id: 1}, {order_item_id: 2, item_id: 2}, {order_item_id: 3, item_id: 3}]
+
 const seedUsers = () => db.Promise.map(USERSARRAY, user => db.model('users').create(user))
 const seedBands = () => db.Promise.map(BANDSARRAY, band => db.model('bands').create(band))
 const seedItems = () => db.Promise.map(ITEMSARRAY, item => db.model('items').create(item))
@@ -374,6 +376,7 @@ const seedOrders = () => db.Promise.map(ORDERSARRAY, order => db.model('orders')
 const seedOrderItems = () => db.Promise.map(ORDERITEMSARRAY, orderItem => db.model('orderItems').create(orderItem))
 const seedOrderUser = () => db.Promise.map(ORDERUSERARRAY, orderUser => db.model('order-user').create(orderUser))
 const seedComments = () => db.Promise.map(CommentsARRAY, comment => db.model('comment').create(comment))
+const seedOrderItemToItem = () => db.Promise.map(ORDERITEMTOITEMARRAY, orderItemToItem => db.model('OrderItem-item').create(orderItemToItem))
 
 	console.log('an enormous string');
 	console.log(CommentsARRAY);
@@ -396,12 +399,13 @@ setTimeout(function(){
     .then(orderItems => console.log(`Seeded ${orderItems.length} orders OK`))
     .then(seedOrderUser)
 		.then(orderItems => console.log(`Seeded ${orderItems.length} orders OK`))
+    .then(seedOrderItemToItem)
+    .then(orderItemToItems => console.log(`Seeded ${orderItemToItems.length} orderItem-item OK`))
     .then(seedComments)
     .then(comments => console.log(`Seeded ${comments.length} order-users OK`))
     .catch(error => console.error(error))
 	  .finally(() => db.close())
-	  console.log(BANDSARRAY);
-}, 30000)
+}, 60000)
 
 
 
