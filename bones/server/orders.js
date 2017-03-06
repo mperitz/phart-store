@@ -26,17 +26,8 @@ router.get('/:orderId', function(req, res, next){
 	.catch(next)
 })
 
-// THIS DOESNT WOOORRRRRRKKKKKKKKKKK!!!!!!!!
-/*
-We want to find the correct Order (based on user id)
-and then eager load in all the extra data.
-The findAll works, but using include just returns
-an empty object.  We know this from simply going
-through the browser and writing in the api url.
-*/
 router.get('/cart/:userId', function(req, res, next){
 // get a specific order by ID
-  console.log('The user id is: ', req.params.userId)
 	Order.findAll({
     include: [
       {
@@ -44,20 +35,36 @@ router.get('/cart/:userId', function(req, res, next){
         where: { id: req.params.userId }
       },
       {
-        model: OrderItem
+        model: OrderItem,
+        include: [ { model: Item } ]
       }
     ]
   })
-	.then(enhancedOrder => res.json(enhancedOrder))
+	.then(enhancedOrder => {
+    req.session.cart = 'Hello cart'
+    console.log(req.session)
+    res.json(enhancedOrder)
+  })
 	.catch(next)
 })
 
-router.post('/cart', function(req, res, next) {
-  Order.findOrCreate({
-    where: {
-      status: 'In Cart'
-    }
+router.post('/cart/:userId', function(req, res, next) {
+  req.sessionCookies.cart.push(req.body)
+  /* Want to add an order item when someone adds
+  an item to the cart.  Do we need to find the order
+  and then include the user and order items and then push the item
+  to the order items?
+  */
+  return Order.findOne({
+    where: { status: 'In Cart' },
+    include: [
+      {
+        model: User,
+        where: { id: req.params.userId }
+      }
+    ]
   })
+  .then(response => res.json(response))
 })
 
 module.exports = router

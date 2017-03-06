@@ -58,7 +58,9 @@ const onAppEnter = () => {
 
 // this doesnt work.  see orders route.
 const onCartEnter = (nextRouterState) => {
-  store.dispatch(fetchCart(nextRouterState.params.userId))
+  if (nextRouterState.params.userId > 0) {
+    store.dispatch(fetchCart(nextRouterState.params.userId))
+  }
 }
 
 const onItemEnter = (nextRouterState) => {
@@ -66,7 +68,6 @@ const onItemEnter = (nextRouterState) => {
   store.dispatch(item(Itemid))
   store.dispatch(fetchComments(Itemid))
 }
-
 
 render(
   <Provider store={store}>
