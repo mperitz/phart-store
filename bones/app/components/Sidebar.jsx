@@ -22,9 +22,7 @@ export default class Sidebar extends React.Component{
     const bandId = event // this is genre id
     this.props.addBand(bandId)
   }
-
-
-  // const playlists = props.playlists;
+  
   render(){
 
       let genresArr = this.props.genres
@@ -38,7 +36,7 @@ export default class Sidebar extends React.Component{
            <h3 className="menu-item">Genres</h3>
           <section>
           {genresArr && genresArr.map(genre => (
-            <h4 className="menu-item btn btn-primary btn-block" key={genre.id} value={genre.id} onClick={() => this.onCLickHandler(genre.id)}>
+            <h4 className="menu-item btn btn-primary btn-block" key={genre.id} value={genre.id} onClick={() => this.onGenreCLickHandler(genre.id)}>
             {genre.name}
             </h4>
           ))
