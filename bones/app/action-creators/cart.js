@@ -70,11 +70,11 @@ export const addToCartAndDb = (item, userId) => {
 
 export const removeItemFromOrder = (item, userId) => {
   return dispatch => {
-    return axios.put(`/api/orders/cart/${userId}`, {
+    axios.put(`/api/orders/cart/${userId}`, {
       item
     })
-    .then(() => {
-      dispatch(fetchCart(userId))
+    .then((res) => {
+      dispatch(removeFromCart(item))
     })
     .catch(err => console.error(err))
   }
