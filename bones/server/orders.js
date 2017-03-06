@@ -37,10 +37,16 @@ through the browser and writing in the api url.
 router.get('/cart/:userId', function(req, res, next){
 // get a specific order by ID
   console.log('The user id is: ', req.params.userId)
-	OrderToUser.findAll({
-    include: [{
-        model: Order
-    }]
+	Order.findAll({
+    include: [
+      {
+        model: User,
+        where: { id: req.params.userId }
+      },
+      {
+        model: OrderItem
+      }
+    ]
   })
 	.then(enhancedOrder => res.json(enhancedOrder))
 	.catch(next)
