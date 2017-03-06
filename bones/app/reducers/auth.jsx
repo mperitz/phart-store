@@ -3,6 +3,9 @@ import axios from 'axios'
 const AUTHENTICATED = 'AUTHENTICATED'
 const EMAIL_NOT_AVAILABLE = 'EMAIL_NOT_AVAILABLE'
 
+import {clearOrders} from '../action-creators/orders'
+
+
 const reducer = (state = null, action) => {
   switch (action.type) {
     case AUTHENTICATED:
@@ -62,7 +65,10 @@ export const signUp = (eventTarget) =>
 export const logout = () =>
   dispatch =>
     axios.post('/api/auth/logout')
-      .then(() => dispatch(whoami()))
+      .then(() => { 
+        dispatch(clearOrders())
+        return dispatch(whoami())
+      })
       .catch(() => dispatch(whoami()))
 
 export default reducer

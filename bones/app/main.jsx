@@ -16,14 +16,13 @@ import ItemsListContainer from './containers/ItemsListContainer'
 import ItemContainer from './containers/ItemContainer'
 import ShoppingCartContainer from './containers/ShoppingCartContainer'
 import CheckoutContainer from './containers/CheckoutContainer'
+import ProfileContainer from './containers/ProfileContainer'
 
 import {item, receiveItems, fetchComments} from './action-creators/items'
 import {receiveAllGenres} from './action-creators/genres'
 import { fetchCart } from './action-creators/cart'
 import {receiveAllBands} from './action-creators/bands'
-
-
-
+import { receiveOrders } from './action-creators/orders'
 
 // const ExampleApp = connect(
 //   ({ auth }) => ({ user: auth })
@@ -70,6 +69,18 @@ const onItemEnter = (nextRouterState) => {
   store.dispatch(fetchComments(Itemid))
 }
 
+const onProfileEnter = (nextRouterState) => {
+  const userId = nextRouterState.params.userId
+  console.log(nextRouterState)
+  axios.get(`/api/users/${userId}/orderHistory`)
+  .then(response => response.data)
+  .then(orderArr => {
+    if(orderArr[0]){
+      store.dispatch(receiveOrders(orderArr[0].orderItems))
+    }
+  })
+}
+
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
@@ -78,8 +89,8 @@ render(
         <Route path="/signup" component={Signup} />
         <Route path ="/items" component={ ItemsListContainer } />
         <Route path ="/items/:Itemid" component={ ItemContainer } onEnter={ onItemEnter } />
-        <Route path="/cart/:userId" component={ ShoppingCartContainer } onEnter= { onCartEnter } />
         <Route path="/checkout" component={ CheckoutContainer } />
+        <Route path="/users/:userId/orderHistory" component={ ProfileContainer} onEnter= {onProfileEnter} />
         <IndexRedirect to="/items" />
       </Route>
     </Router>

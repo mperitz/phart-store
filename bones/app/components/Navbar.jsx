@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 
 export default function (props) {
 
-  // const playlists = props.playlists;
+  console.log(props)
 
   return (
     <div>
@@ -42,6 +42,13 @@ export default function (props) {
                         {props.auth ? <div id="mySidenav" className="sidenav">
                             <Link to={'/'} >
                               <button className="btn btn-info" onClick={props.logout}>Logout</button>
+                            </Link>
+                        </div> : null}
+                    </div>
+                    <div className="nav-right col-sm-1">
+                        {props.auth ? <div id="mySidenav" className="sidenav">
+                            <Link to={`/users/${props.auth.id}/orderHistory`} >
+                              <button className="btn btn-info" onClick={() => props.fetchOrders(props.auth.id)}>Order History</button>
                             </Link>
                         </div> : null}
                     </div>
