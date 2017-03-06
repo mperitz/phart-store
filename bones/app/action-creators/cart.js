@@ -1,4 +1,4 @@
-import { RECEIVE_CART, ADD_ITEM_TO_CART, REMOVE_ITEM_FROM_CART, GET_TOTAL_ORDER_PRICE} from '../constants'
+import { RECEIVE_CART, ADD_ITEM_TO_CART, REMOVE_ITEM_FROM_CART } from '../constants'
 import axios from 'axios'
 
 export const receiveCart = list => ({
@@ -14,11 +14,6 @@ export const addToCart = item => ({
 export const removeFromCart = itemToBeRemoved => ({
   type: REMOVE_ITEM_FROM_CART,
   itemToBeRemoved
-})
-
-export const getTotalCartPrice = item => ({
-  type: GET_TOTAL_ORDER_PRICE,
-  price: item.price
 })
 
 export const fetchCart = userId => {
