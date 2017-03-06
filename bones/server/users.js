@@ -2,6 +2,10 @@
 
 const db = require('APP/db')
 const User = db.model('users')
+const Order = db.model('orders')
+const OrderItem = db.model('orderItems')
+const Item = db.model('items')
+
 
 const {mustBeLoggedIn, forbidden} = require('./auth.filters')
 
@@ -18,3 +22,27 @@ module.exports = require('express').Router() // eslint-disable-line new-cap
     User.findById(req.params.id)
     .then(user => res.json(user))
     .catch(next))
+  .get('/:userId/orderHistory', function(req, res, next) {
+    if(req.user){
+    Order.findAll({
+      where: {
+        status:{
+          $ne: 'In Cart'
+        }
+      },
+    include: [
+      {
+        model: User,
+        where: { id: req.user.dataValues.id }
+      },
+      {
+        model: OrderItem,
+        include: [ { model: Item } ]
+      }
+    ]
+  })
+    .then(orders => res.json(orders))
+    .catch(next)
+  }
+  })
+  
