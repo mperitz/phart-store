@@ -157,7 +157,7 @@ function scrapePresidents (URL, imageURL, emailBeginning){
 					}
 				}
 				user.about_me = description.join('\n');
-				user.email = emailBeginning + Math.random()*10 + '@whitehouse.gov';
+				user.email = emailBeginning + Math.floor(Math.random()*10) + '@whitehouse.gov';
 				user.username = emailBeginning;
 				user.password = '1234'
 

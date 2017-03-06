@@ -35,5 +35,19 @@ router.get('/:Itemid/comments', function(req, res, next) {
   .catch(next)
 })
 
+router.post('/:Itemid/comments', function(req, res, next) {
+  const comment = {
+    user_id: req.body.user_id,
+    item_id: req.params.Itemid,
+    content: req.body.content,
+    num_stars: req.body.num_stars
+  }
+  Comment.create(comment)
+  .then(newComment => {
+    res.json(newComment)
+  })
+  .catch(next)
+})
+
 
 module.exports = router
