@@ -18,6 +18,7 @@ export default class extends React.Component {
       cartItems.length ?
       <div>
         <span>Order Total: {(this.getTotal() / 100).toFixed(2)}</span>
+        <Link to={'/checkout'} ><button className="btn btn-success">Checkout</button></Link>
         <ol>
           {cartItems.map(item => {
             return (
