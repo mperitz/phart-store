@@ -48,7 +48,7 @@ router.get('/cart/:userId', function(req, res, next){
 
 router.post('/cart/:userId', function(req, res, next) {
   return Order.findOrCreate({
-    where: { status: 'In Cart' },
+    where: { status: 'In Cart', user_id: req.params.userId },
     include: [
       {
         model: User,
@@ -57,7 +57,8 @@ router.post('/cart/:userId', function(req, res, next) {
     ]
   })
   .then(order => {
-    console.log(order)
+    console.log('The order is: ', order)
+    console.log('The userId is: ', req.params.userId)
     if (order[1] === true) {
       OrderToUser.create({
         order_id: order[0].id,
@@ -118,7 +119,8 @@ router.put(`/checkout/:orderId`, function(req, res, next) {
   })
   .then(() => {
     return Order.create({
-      status: 'In Cart'
+      status: 'In Cart',
+      user_id: req.body.userId
     })
   })
   .then((order) => {
