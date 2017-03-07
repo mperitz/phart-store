@@ -21,6 +21,7 @@ User.hasOne(OAuth)
 Item.belongsTo(User, {as: 'seller'})
 
 //puts a user id on the order (can have multiple orders)
+Order.belongsTo(User)
 Order.belongsToMany(User, {through: 'order-user'})
 User.belongsToMany(Order, {through: 'order-user'})
 

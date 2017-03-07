@@ -346,7 +346,7 @@ const GENRESARRAY = [
   {name: 'Country'}
 ]
 
-const ORDERSARRAY = [{status: 'In Cart'}]
+const ORDERSARRAY = [{status: 'In Cart', user_id: 44}]
 const ORDERITEMSARRAY = [
   {quantity: 1, price: 1300, item_id: 1, order_id: 1},
   {quantity: 1, price: 3700, item_id: 2, order_id: 1},
