@@ -58,6 +58,13 @@ router.post('/cart/:userId', function(req, res, next) {
   })
   .then(order => {
     console.log(order)
+    if (order[1] === true) {
+      OrderToUser.create({
+        order_id: order[0].id,
+        user_id: req.params.userId
+      })
+      .catch(next)
+    }
     return OrderItem.create({
         quantity: req.body.quantity,
         price: req.body.item.price,
