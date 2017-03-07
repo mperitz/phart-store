@@ -7,9 +7,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  // loadOrders: orders => {
-  //   dispatch(getOrders(item))
-  // }
+  loadOrders: orders => {
+    dispatch(fetchOrders(orders))
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

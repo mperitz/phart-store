@@ -3,16 +3,18 @@ import ItemsList from './ItemsList'
 
 
 export default function Profile (props) {
-
-	// console.log(props.orders)
+	// const testingProps = props.orders[0].orderItems ? props.orders[0].orderItems : 'no order items yet'
+	console.log('testing props', props.orders)
 
 	return (
 		<div>
-			{props.orders && props.orders.map(el => (
+			{props.orders && props.orders.map((el, index) => (
 
-				<div key={el.order_id}>
-					<h4 > Order # {el.order_id} </h4>
-					<ItemsList items={el.items} />
+				<div key={el.id}>
+					<h4 > Order # {index+1} </h4>
+					<ItemsList items={el.orderItems.map(orderItem => {
+						return orderItem.items[0]
+					})} />
 				</div>
 
 			)

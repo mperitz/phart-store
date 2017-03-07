@@ -16,7 +16,7 @@ export const fetchOrders = (userId) => {
     .then(response => {
     	if(response.data[0]){
 	      console.log('testing route', response.data)
-          dispatch(receiveOrders(response.data[0].orderItems))
+          dispatch(receiveOrders(response.data))
 	  }
     })
     .catch(console.error)
