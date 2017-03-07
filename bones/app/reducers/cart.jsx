@@ -1,4 +1,4 @@
-import { RECEIVE_CART, ADD_ITEM_TO_CART, REMOVE_ITEM_FROM_CART } from '../constants'
+import { RECEIVE_CART, ADD_ITEM_TO_CART, REMOVE_ITEM_FROM_CART, CLEAR_CART } from '../constants'
 
 const initialState = {
   list: [],
@@ -13,6 +13,10 @@ export default function (state = initialState, action) {
 
     case RECEIVE_CART:
       newState.list = action.list
+      break
+
+    case CLEAR_CART:
+      newState.list = []
       break
 
     case ADD_ITEM_TO_CART:
