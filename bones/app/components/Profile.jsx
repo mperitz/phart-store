@@ -4,9 +4,7 @@ import ItemsList from './ItemsList'
 
 export default function Profile (props) {
 
-	console.log(props.orders)
-	const orders = [];
-
+	// console.log(props.orders)
 
 	return (
 		<div>
