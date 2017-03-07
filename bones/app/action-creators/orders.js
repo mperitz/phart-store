@@ -15,7 +15,8 @@ export const fetchOrders = (userId) => {
     axios.get(`/api/users/${userId}/orderHistory`)
     .then(response => {
     	if(response.data[0]){
-	      dispatch(receiveOrders(response.data[0].orderItems))
+	      console.log('testing route', response.data)
+          dispatch(receiveOrders(response.data))
 	  }
     })
     .catch(console.error)

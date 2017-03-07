@@ -71,12 +71,12 @@ const onItemEnter = (nextRouterState) => {
 
 const onProfileEnter = (nextRouterState) => {
   const userId = nextRouterState.params.userId
-  console.log(nextRouterState)
+  // console.log(nextRouterState)
   axios.get(`/api/users/${userId}/orderHistory`)
   .then(response => response.data)
   .then(orderArr => {
     if(orderArr[0]){
-      store.dispatch(receiveOrders(orderArr[0].orderItems))
+      store.dispatch(receiveOrders(orderArr))
     }
   })
 }

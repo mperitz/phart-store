@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 
 export default function (props) {
 
-  console.log(props)
+  // console.log(props)
 
   return (
     <div>
