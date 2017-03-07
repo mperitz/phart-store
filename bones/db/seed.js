@@ -364,7 +364,13 @@ for(let i = 0; i<44; i++){
 	})
 }
 
-const ORDERUSERARRAY = [{order_id: 1, user_id: 44}]
+const ORDERUSERARRAY = []
+for(var i = 1; i<45;i++){
+	ORDERUSERARRAY.push({user_id: i, order_id: i})
+}
+
+
+
 
 const ORDERITEMTOITEMARRAY = [{order_item_id: 1, item_id: 1}, {order_item_id: 2, item_id: 2}, {order_item_id: 3, item_id: 3}]
 
