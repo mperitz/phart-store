@@ -19,7 +19,9 @@ export default class Checkout extends React.Component {
   }
   onSumbitHandler(event){
     event.preventDefault()
-    this.props.submitCheckout(this.props.cart[0].order_id, this.state)
+    const body = this.state
+    body.userId = this.props.user.id
+    this.props.submitCheckout(this.props.cart[0].order_id, body)
     alert('Your purchase is complete!')
     browserHistory.push('/')
   }
