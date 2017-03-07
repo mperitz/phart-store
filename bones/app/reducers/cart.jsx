@@ -20,8 +20,8 @@ export default function (state = initialState, action) {
       break
 
     case REMOVE_ITEM_FROM_CART:
-    newState.list = newState.list.filter(item => item.id !== action.itemToBeRemoved.id)
-    break
+      newState.list = newState.list.filter(item => item.id !== action.itemToBeRemoved.id)
+      break
 
     default:
       return state

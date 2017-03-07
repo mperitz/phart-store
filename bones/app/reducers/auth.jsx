@@ -5,6 +5,8 @@ const EMAIL_NOT_AVAILABLE = 'EMAIL_NOT_AVAILABLE'
 
 import {clearOrders} from '../action-creators/orders'
 
+import { browserHistory } from 'react-router'
+
 
 const reducer = (state = null, action) => {
   switch (action.type) {
@@ -32,6 +34,9 @@ export const whoami = () =>
       .then(response => {
         const user = response.data
         dispatch(authenticated(user))
+      })
+      .then(() => {
+        browserHistory.push('/')
       })
       .catch(() => dispatch(authenticated(null)))
 
@@ -65,7 +70,7 @@ export const signUp = (eventTarget) =>
 export const logout = () =>
   dispatch =>
     axios.post('/api/auth/logout')
-      .then(() => { 
+      .then(() => {
         dispatch(clearOrders())
         return dispatch(whoami())
       })

@@ -26,21 +26,23 @@ export const fetchCart = userId => {
     })
     .then(cart => {
       console.log('HERE IS THE CART!!!', cart)
-      const modifiedCart = cart[0].orderItems.map(item => {
-        console.log(item)
-        return ({
-          id: item.id,
-          item_id: item.item_id,
-          name: item.items[0].name || '',
-          profile_image: item.items[0].profile_image || '',
-          order_id: item.order_id,
-          price: item.price,
-          quantity: item.quantity,
-          created_at: item.created_at,
-          updated_at: item.updated_at
+      if (cart.length) {
+        const modifiedCart = cart[0].orderItems.map(item => {
+          console.log(item)
+          return ({
+            id: item.id,
+            item_id: item.item_id,
+            name: item.items[0].name || '',
+            profile_image: item.items[0].profile_image || '',
+            order_id: item.order_id,
+            price: item.price,
+            quantity: item.quantity,
+            created_at: item.created_at,
+            updated_at: item.updated_at
+          })
         })
-      })
-      dispatch(receiveCart(modifiedCart))
+        dispatch(receiveCart(modifiedCart))
+      }
     })
     .catch(err => console.error(err))
   }

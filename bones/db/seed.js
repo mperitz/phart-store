@@ -405,7 +405,7 @@ setTimeout(function(){
     .then(comments => console.log(`Seeded ${comments.length} order-users OK`))
     .catch(error => console.error(error))
 	  .finally(() => db.close())
-}, 60000)
+}, 70000)
 
 
 

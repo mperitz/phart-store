@@ -1,45 +1,60 @@
 import React from 'react'
+import { browserHistory } from 'react-router'
 
 export default class Checkout extends React.Component {
 
-   constructor(props){
+  constructor(props){
     super(props);
     this.state = {
-
+      street: '',
+      city: '',
+      state: '',
+      zip: '',
     }
     this.onSumbitHandler = this.onSumbitHandler.bind(this)
-    this.onChangeHandler = this.onChangeHandler.bind(this)
-    }
-
-  onChangeHandler(event){
-    const contentVal = event.target.value
-    this.setState({content: contentVal
-    })
+    this.onStreetChange = this.onStreetChange.bind(this)
+    this.onCityChange = this.onCityChange.bind(this)
+    this.onStateChange = this.onStateChange.bind(this)
+    this.onZipChange = this.onZipChange.bind(this)
   }
-
   onSumbitHandler(event){
-    const userId = this.props.userId
-    const inputObj = { user_id: userId, content: this.state.content, itemId: this.props.itemId}
-    this.props.submitHandler(inputObj)
+    event.preventDefault()
+    this.props.submitCheckout(this.props.cart[0].order_id, this.state)
+    alert('Your purchase is complete!')
+    browserHistory.push('/')
+  }
+  onStreetChange(event) {
+    this.setState({ street: event.target.value })
+  }
+  onCityChange(event) {
+    this.setState({ city: event.target.value })
+  }
+  onStateChange(event) {
+    this.setState({ state: event.target.value })
+  }
+  onZipChange(event) {
+    this.setState({ zip: event.target.value })
   }
 
   render() {
-    const allComments = this.props.allComments
-
     return (
     <div>
-      {this.props.userId &&
+      <h1>Checkout</h1>
       <form className="mui-form" onSubmit={this.onSumbitHandler}>
-        <legend>Comment</legend>
         <div className="mui-textfield">
-          <input type="text" placeholder="Input 1" onChange={this.onChangeHandler} />
+          <ul>
+            <li>Shipping Address</li><input name="street" type="text" placeholder="ex. 555 Gordon Lane" onChange={this.onStreetChange} />
+            <li>City</li><input type="text" name="city" placeholder="Jamville" onChange={this.onCityChange} />
+            <li>State</li><input type="text" name="state" placeholder="TN" onChange={this.onStateChange} />
+            <li>Zip</li><input type="text" name="zip" placeholder="01337" onChange={this.onZipChange} />
+            <li>Credit Card</li><input type="password" placeholder="xxxx-xxxx-xxxx-xxxx" />
+            <li>Exp Date</li><input type="text" placeholder="MM/YY" />
+            <li>Security Code</li><input type="text" placeholder="ex. 555" />
+          </ul>
         </div>
-        <button type="submit" className="mui-btn mui-btn--raised">Submit</button>
+        <button type="submit" className="btn btn-success">Submit</button>
       </form>
-      }
     </div>
   )
   }
-
-
 }

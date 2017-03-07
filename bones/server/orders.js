@@ -57,12 +57,12 @@ router.post('/cart/:userId', function(req, res, next) {
     ]
   })
   .then(order => {
+    console.log(order)
     return OrderItem.create({
         quantity: req.body.quantity,
         price: req.body.item.price,
         order_id: order[0].id,
         item_id: req.body.item.id
-
     })
   })
   .then(createdItem => {
@@ -95,6 +95,33 @@ router.put('/cart/:userId', function(req, res, next) {
   .then(result => {
     res.json(result)
   })
+  .catch(next)
+})
+
+router.put(`/checkout/:orderId`, function(req, res, next) {
+  Order.findById(req.params.orderId)
+  .then(order => {
+    return order.update({
+      status: 'Processing',
+      street: req.body.street,
+      city: req.body.city,
+      state: req.body.state,
+      zip: req.body.zip
+    })
+  })
+  // .then(() => {
+  //   return Order.create({
+  //     status: 'In Cart'
+  //   })
+  // })
+  // .then((order) => {
+  //   return OrderToUser.create({
+  //     order_id: order.id,
+  //     user_id: req.params.userId
+  //   })
+  // })
+  // Cant get this method to work.  It creates a new order empty in cart order
+  // when the user checks out of their current order.  But it refuses to create the association of order to user, even if I explicitly set it, as above.
   .catch(next)
 })
 
