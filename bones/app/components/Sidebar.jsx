@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {Link, browserHistory} from 'react-router';
 
 
 
@@ -16,13 +16,15 @@ export default class Sidebar extends React.Component{
   onGenreCLickHandler(event){
     const genreId = event // this is genre id
     this.props.addGenre(genreId)
+    browserHistory.push('/')
   }
 
   onBandCLickHandler(event){
     const bandId = event // this is genre id
     this.props.addBand(bandId)
+    browserHistory.push('/')
   }
-  
+
   render(){
 
       let genresArr = this.props.genres

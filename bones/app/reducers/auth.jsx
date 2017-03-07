@@ -4,6 +4,7 @@ const AUTHENTICATED = 'AUTHENTICATED'
 const EMAIL_NOT_AVAILABLE = 'EMAIL_NOT_AVAILABLE'
 
 import {clearOrders} from '../action-creators/orders'
+import {clearCart} from '../action-creators/cart'
 
 import { browserHistory } from 'react-router'
 
@@ -72,6 +73,7 @@ export const logout = () =>
     axios.post('/api/auth/logout')
       .then(() => {
         dispatch(clearOrders())
+        dispatch(clearCart())
         return dispatch(whoami())
       })
       .catch(() => dispatch(whoami()))

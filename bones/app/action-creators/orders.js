@@ -10,8 +10,6 @@ export const clearOrders = () => ({
     type: CLEAR_ORDERS
 })
 
-
-
 export const fetchOrders = (userId) => {
   return dispatch => {
     axios.get(`/api/users/${userId}/orderHistory`)

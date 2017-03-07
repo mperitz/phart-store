@@ -1,4 +1,4 @@
-import { RECEIVE_CART, ADD_ITEM_TO_CART, REMOVE_ITEM_FROM_CART } from '../constants'
+import { RECEIVE_CART, ADD_ITEM_TO_CART, REMOVE_ITEM_FROM_CART, CLEAR_CART } from '../constants'
 import axios from 'axios'
 
 export const receiveCart = list => ({
@@ -14,6 +14,10 @@ export const addToCart = item => ({
 export const removeFromCart = itemToBeRemoved => ({
   type: REMOVE_ITEM_FROM_CART,
   itemToBeRemoved
+})
+
+export const clearCart = () => ({
+  type: CLEAR_CART
 })
 
 export const fetchCart = userId => {
